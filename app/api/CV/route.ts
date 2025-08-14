@@ -2,8 +2,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 // This route is static and can run on the Edge runtime safely
-export const runtime = "edge";
-export const dynamic = "force-static";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export function GET(req: NextRequest) {
   // Redirect /api/CV -> /CV/arun-sudhakar-cv.pdf (served from /public/CV)
