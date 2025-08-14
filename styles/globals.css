@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body { height: 100%; background: theme(colors.base.bg); color: theme(colors.base.text); }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Gradients */
+.bg-conic {
+  background: conic-gradient(from 90deg at 50% 120%, #000 0deg, rgba(0,229,255,.12) 120deg, rgba(124,77,255,.1) 240deg, #000 360deg);
+}
+
+/* Cards */
+.card { @apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur; }
+
+/* Scrollbar (Webkit) */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 999px; }
+
+/* Hide scrollbars for the marquee */
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+.frame-shadow { box-shadow: 0 20px 60px -20px rgba(0,0,0,.5); }
+object-fit: contain; width: 100%; height: 100%;
+
+/* ===== App Background & Helpers ===== */
+:root {
+  --bg-a: #0b1014;
+  --bg-b: #0e141a;
+  --ring-cyan: #00e5ff;
+  --ring-violet: #6c5ce7;
+}
+
+/* soft gradient + vignette + subtle grid */
+.bg-app {
+  background:
+    radial-gradient(1200px 800px at 70% -10%, rgba(108,92,231,0.12), transparent 60%),
+    radial-gradient(900px 700px at -10% 20%, rgba(0,229,255,0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-a), var(--bg-b));
+  position: relative;
+}
+.bg-app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px;
+  mask-image: radial-gradient(90% 80% at 50% 20%, black, transparent);
+}
+
+/* pills inside Skills grid */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .45rem .75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  font-size: .9rem;
+  transition: transform .2s ease, background .2s ease;
+}
+.skill-pill .dot {
+  width: .45rem; height: .45rem; border-radius: 9999px;
+  background: rgba(0,229,255,.85);
+  box-shadow: 0 0 0 2px rgba(0,229,255,.15);
+}
+.skill-pill:hover { transform: translateY(-2px); background: rgba(255,255,255,.12); }
+
+/* nicer inputs / selects / textareas */
+@layer components {
+  .input, .select, .textarea {
+    @apply w-full rounded-xl bg-transparent border border-white/15 px-3 py-2 outline-none transition;
+  }
+  .input:focus, .select:focus, .textarea:focus {
+    box-shadow: 0 0 0 2px rgba(0,229,255,.25);
+    border-color: rgba(0,229,255,.5);
+  }
+  .field-label { @apply text-sm text-white/80; }
+}
+
+/* Compact animated float for cards */
+@keyframes float-slow {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+/* typing effect for a single line */
+.typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid rgba(255,255,255,.6);
+  animation: typing 2.4s steps(36, end), blink .9s step-end infinite;
+  padding-right: 4px;
+}
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes blink { from, to { border-color: transparent } 50% { border-color: rgba(255,255,255,.7) } }
