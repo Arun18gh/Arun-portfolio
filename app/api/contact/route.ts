@@ -1,63 +1,38 @@
 // app/api/contact/route.ts
-export const runtime = "nodejs";         // Nodemailer needs Node runtime
-export const dynamic = "force-dynamic";  // avoid static optimization
-
 import { NextResponse } from "next/server";
+// @ts-ignore
 import nodemailer from "nodemailer";
 import { z } from "zod";
 
-const schema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  subject: z.string().min(2),
-  service: z.string().optional(),
-  phone: z.string().optional(),
-  budget: z.string().optional(),
-  timeline: z.string().optional(),
-  message: z.string().min(5),
-  linkedin: z.string().url().optional(),
-});
+/* ================================
+   Your existing code continues here
+   ================================ */
 
+// Example (keep your existing logic below this point)
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const data = schema.parse(body);
 
+    // Create a transporter
     const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,                      // e.g. smtp.gmail.com
-      port: Number(process.env.MAIL_PORT || 587),       // 587 STARTTLS (recommended)
-      secure: process.env.MAIL_PORT === "465",          // true only for 465
+      service: "gmail",
       auth: {
-        user: process.env.MAIL_USER!,                   // SMTP username
-        pass: process.env.MAIL_PASS!,                   // SMTP password / app password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
-    const to = process.env.MAIL_TO || process.env.MAIL_USER!;
-    const from = process.env.MAIL_FROM || process.env.MAIL_USER!;
-
+    // Send the email
     await transporter.sendMail({
-      from: `"Portfolio Contact" <${from}>`,
-      to,
-      subject: `Portfolio: ${data.subject}`,
-      replyTo: data.email,
-      text: `
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone ?? "-"}
-Service: ${data.service ?? "-"}
-Budget: ${data.budget ?? "-"}
-Timeline: ${data.timeline ?? "-"}
-LinkedIn: ${data.linkedin ?? "-"}
-Message:
-${data.message}
-      `.trim(),
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_TO,
+      subject: body.subject || "No Subject",
+      text: body.message || "",
     });
 
-    return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    console.error(err);
-    const msg = err?.message ?? "Unknown error";
-    return NextResponse.json({ ok: false, error: msg }, { status: 400 });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return NextResponse.json({ success: false, error: "Failed to send email" });
   }
 }
