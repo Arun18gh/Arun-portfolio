@@ -12,24 +12,24 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4   # ✅ update to v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # ✅ update to v4
         with:
           node-version: 18
 
       - name: Install dependencies
         run: npm install
 
-      # ✅ Remove reportWebVitals and ReportHandler if present
+      # ✅ Remove reportWebVitals & ReportHandler if they exist
       - name: Remove reportWebVitals files
         run: rm -f reportWebVitals.ts reportWebVitals.js
 
       - name: Remove reportWebVitals imports
         run: |
-          grep -rl "reportWebVitals" . | xargs sed -i '/reportWebVitals/d'
-          grep -rl "ReportHandler" . | xargs sed -i '/ReportHandler/d'
+          grep -rl "reportWebVitals" . | xargs sed -i '/reportWebVitals/d' || true
+          grep -rl "ReportHandler" . | xargs sed -i '/ReportHandler/d' || true
 
       - name: Build Next.js app
         run: npm run build
@@ -38,7 +38,7 @@ jobs:
         run: npm run export
 
       - name: Upload production-ready build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4   # ✅ updated to v4
         with:
           name: nextjs-build
           path: out
