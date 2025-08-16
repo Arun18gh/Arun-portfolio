@@ -1,13 +1,15 @@
-name: Deploy Next.js to GitHub Pages
+name: Next.js CI/CD
 
 on:
   push:
-    branches:
-      - main   # or master if your branch is master
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,17 +22,23 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Remove web-vitals (if exists)
+      # ✅ Remove reportWebVitals and ReportHandler if present
+      - name: Remove reportWebVitals files
         run: rm -f reportWebVitals.ts reportWebVitals.js
 
-      - name: Build Next.js
+      - name: Remove reportWebVitals imports
+        run: |
+          grep -rl "reportWebVitals" . | xargs sed -i '/reportWebVitals/d'
+          grep -rl "ReportHandler" . | xargs sed -i '/ReportHandler/d'
+
+      - name: Build Next.js app
         run: npm run build
 
       - name: Export static site
         run: npm run export
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload production-ready build
+        uses: actions/upload-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          name: nextjs-build
+          path: out
