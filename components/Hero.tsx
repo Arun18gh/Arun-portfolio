@@ -60,7 +60,7 @@ export default function Hero() {
           >
             {/* Keep uppercase paths since your folders/routes use 'CV' */}
             <a
-              href="/api/CV?file=/CV/arun-sudhakar-cv.pdf"
+              href="/CV/arun-sudhakar-cv.pdf"
               className="inline-flex items-center gap-2 rounded-xl bg-accent-cyan text-black font-semibold px-5 py-3 shadow-glow"
             >
               Download CV

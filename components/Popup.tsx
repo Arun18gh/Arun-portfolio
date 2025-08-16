@@ -1,7 +1,12 @@
 import React from "react";
 import styles from "./Popup.module.css";
 
-export default function Popup({ show, onClose }) {
+type PopupProps = {
+  show: boolean;
+  onClose: () => void;
+};
+
+export default function Popup({ show, onClose }: PopupProps) {
   if (!show) return null;
 
   return (

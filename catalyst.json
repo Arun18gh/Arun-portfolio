@@ -1,0 +1,6 @@
+{
+  "client": {
+    "source": "portfolio-arun",
+    "plugin": "zcatalyst-cli-plugin-react"
+  }
+}

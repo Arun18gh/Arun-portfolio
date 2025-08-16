@@ -22,7 +22,7 @@ export default function Navbar() {
             </Link>
           ))}
         </div>
-        <a href="/api/CV?file=/CV/arun-sudhakar-cv.pdf"
+        <a href="/CV/arun-sudhakar-cv.pdf"
           className="px-5 py-3 rounded-xl bg-accent-cyan text-black font-semibold shadow-glow">Download CV
         </a>
 

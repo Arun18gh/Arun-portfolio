@@ -1,43 +1,39 @@
-// lib/mail.ts
-import nodemailer, { Transporter } from "nodemailer";
+import nodemailer from 'nodemailer';
 
-const host = process.env.MAIL_HOST;
-const user = process.env.MAIL_USER;
-const pass = process.env.MAIL_PASS;
-const port = Number(process.env.MAIL_PORT || 587);
+let transporter: any = null;
 
-let transporter: Transporter | null = null;
+const host = process.env.SMTP_HOST || "smtp.gmail.com";
+const port = Number(process.env.SMTP_PORT || 465);
+const secure = process.env.SMTP_SECURE === "true"; // true for 465, false for 587
 
-console.log("MAIL_USER:", process.env.MAIL_USER);
-console.log("MAIL_PASS exists:", !!process.env.MAIL_PASS);
-console.log("Host:", host, "Port:", port);
+const user = process.env.SMTP_USER;
+const pass = process.env.SMTP_PASS;
 
-
-if (host && user && pass) {
+if (user && pass) {
   transporter = nodemailer.createTransport({
     host,
     port,
-    secure: port === 465, // Gmail SSL if port 465
-    auth: { user, pass },
+    secure,
+    auth: {
+      user,
+      pass,
+    },
+  }) as any;
+}
+
+export async function sendMail(to: string, subject: string, html: string) {
+  if (!transporter) {
+    throw new Error("Mail transporter not configured.");
+  }
+
+  const from = process.env.CONTACT_FROM || `"Portfolio Bot" <${user}>`;
+
+  return transporter.sendMail({
+    from,
+    to,
+    subject,
+    html,
   });
 }
 
-export async function sendMail({
-  name,
-  email,
-  message,
-}: {
-  name: string;
-  email: string;
-  message: string;
-}) {
-  if (!transporter) return;
-
-  await transporter.sendMail({
-    from: `Portfolio <${user}>`,
-    to: process.env.CONTACT_TO || user,
-    subject: `New message from ${name}`,
-    text: message,
-    html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p>${message}</p>`,
-  });
-}
+export default transporter;

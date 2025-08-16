@@ -7,5 +7,5 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/arun-sudhakar-66a363252/",
     github: "https://github.com/Arun18gh",
   },
-  resumeHref: "/CV - Arun sudhakar.pdf", // place your file in public/
+  resumeHref: "/CV - arun-sudhakar-cv.pdf", // place your file in public/
 };
