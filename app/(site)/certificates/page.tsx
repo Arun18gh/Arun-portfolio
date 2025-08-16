@@ -1,3 +1,5 @@
+// app/(site)/certificates/page.tsx
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
