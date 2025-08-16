@@ -1,3 +1,10 @@
+name: Deploy Next.js to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main   # or master if your branch is master
+
 jobs:
   build:
     runs-on: ubuntu-latest
