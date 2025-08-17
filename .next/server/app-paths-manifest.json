@@ -2,6 +2,6 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/(site)/contact/page": "app/(site)/contact/page.js",
   "/(site)/certificates/page": "app/(site)/certificates/page.js",
-  "/(site)/page": "app/(site)/page.js",
-  "/(site)/projects/page": "app/(site)/projects/page.js"
+  "/(site)/projects/page": "app/(site)/projects/page.js",
+  "/(site)/page": "app/(site)/page.js"
 }

@@ -1,0 +1,13 @@
+{
+  "name": "arun-portfolio",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "next build && next export",
+    "start": "next start"
+  },
+  "client": {
+    "source": ".",
+    "distribution": "out",
+    "build": "npm run build"
+  }
+}
