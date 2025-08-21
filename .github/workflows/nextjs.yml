@@ -1,12 +1,12 @@
-name: Deploy Next.js to GitHub Pages
+name: Deploy Next.js site to GitHub Pages
 
 on:
   push:
     branches:
-      - main   # 👈 change this if your default branch is "master"
+      - main   # Change this if your default branch is not 'main'
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,13 +17,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build and Export
+      - name: Build Next.js app
         run: npm run build
+
+      - name: Export static files
+        run: npm run export
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
