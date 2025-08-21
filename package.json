@@ -8,7 +8,7 @@
   "start": "next start",
   "lint": "next lint",
   "deploy": "npm run build",
-  "export": "next build && next export"
+  "export": "next export"
 }
 
   "dependencies": {
