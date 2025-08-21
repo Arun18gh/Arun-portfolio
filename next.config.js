@@ -2,7 +2,7 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
-  //output: 'export',
+  output: 'export',   // ✅ enable static export
   basePath: '/Arun-portfolio',
   assetPrefix: '/Arun-portfolio/',
   images: {
