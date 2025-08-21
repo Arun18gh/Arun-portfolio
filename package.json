@@ -3,13 +3,13 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "deploy": "npm run build",
-    "export": "next export"
-  },
+  "dev": "next dev",
+  "build": "next build && next export",
+  "start": "next start",
+  "lint": "next lint",
+  "deploy": "gh-pages -d out"
+}
+
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "dotenv": "^17.2.1",
